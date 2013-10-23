@@ -1,36 +1,35 @@
 package com.epam.ticketsonline.service.impl;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.epam.ticketsonline.controller.model.BookedTicketFilterModel;
 import com.epam.ticketsonline.controller.model.TicketFilterModel;
 import com.epam.ticketsonline.dao.TicketDao;
-import com.epam.ticketsonline.entity.BookedTicket;
+import com.epam.ticketsonline.entity.BookedInfo;
 import com.epam.ticketsonline.entity.Ticket;
 import com.epam.ticketsonline.service.TicketService;
 
-@Component("ticketService")
+@Service("ticketService")
 public class DefaultTicketService implements TicketService {
 
     @Autowired
     private TicketDao ticketDao;
 
     @Override
-    public Set<String> getDatesOfMovieScreenings() {
+    public List<String> getDatesOfMovieScreenings() {
         return ticketDao.getDatesOfMovieScreenings();
     }
 
     @Override
-    public Set<String> getMovies() {
+    public List<String> getMovies() {
         return ticketDao.getMovies();
     }
 
     @Override
-    public Set<String> getCategories() {
+    public List<String> getCategories() {
         return ticketDao.getCategories();
     }
 
@@ -42,7 +41,7 @@ public class DefaultTicketService implements TicketService {
     }
 
     @Override
-    public List<BookedTicket> getBookedTickets(
+    public List<BookedInfo> getBookedTickets(
             final BookedTicketFilterModel bookedTicketFilterModel) {
         return ticketDao.getBookedTickets(
                 bookedTicketFilterModel.getUserName(),
@@ -52,8 +51,8 @@ public class DefaultTicketService implements TicketService {
     }
 
     @Override
-    public void setTicketBooked(final String ticketId, final String userName) {
-        ticketDao.setTicketBooked(ticketId, userName);
+    public void bookTicket(final String ticketId, final String userName) {
+        ticketDao.bookTicket(ticketId, userName);
     }
 
 }

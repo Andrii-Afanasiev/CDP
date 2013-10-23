@@ -1,24 +1,27 @@
 package com.epam.ticketsonline.service;
 
 import java.util.List;
-import java.util.Set;
+
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.epam.ticketsonline.controller.model.BookedTicketFilterModel;
 import com.epam.ticketsonline.controller.model.TicketFilterModel;
-import com.epam.ticketsonline.entity.BookedTicket;
+import com.epam.ticketsonline.entity.BookedInfo;
 import com.epam.ticketsonline.entity.Ticket;
 
+@Transactional(propagation=Propagation.REQUIRED)
 public interface TicketService {
 
-    Set<String> getDatesOfMovieScreenings();
+    List<String> getDatesOfMovieScreenings();
 
     List<Ticket> getTickets(TicketFilterModel ticketFilterModel);
 
-    List<BookedTicket> getBookedTickets(BookedTicketFilterModel bookedTicketFilterModel);
+    List<BookedInfo> getBookedTickets(BookedTicketFilterModel bookedTicketFilterModel);
 
-    Set<String> getMovies();
+    List<String> getMovies();
 
-    Set<String> getCategories();
+    List<String> getCategories();
 
-    void setTicketBooked(String ticketId, String userName);
+    void bookTicket(String ticketId, String userName);
 }

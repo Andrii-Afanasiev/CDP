@@ -68,7 +68,7 @@ public class BookingController {
     @RequestMapping(value = "/bookTicket", method = RequestMethod.POST)
     public ModelAndView bookTicket(@RequestParam("id") final String ticketId,
             @RequestParam("name") final String userName) {
-        ticketService.setTicketBooked(ticketId, userName);
+        ticketService.bookTicket(ticketId, userName);
         final ModelAndView modelAndView = new ModelAndView(
                 BOOKED_TICKETS_LIST_VIEW_NAME).addObject("tickets",
                 ticketService.getBookedTickets(new BookedTicketFilterModel(

@@ -2,22 +2,21 @@ package com.epam.ticketsonline.dao;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
-import com.epam.ticketsonline.entity.BookedTicket;
+import com.epam.ticketsonline.entity.BookedInfo;
 import com.epam.ticketsonline.entity.Ticket;
 import com.epam.ticketsonline.entity.TicketCategory;
 
 public interface TicketDao {
     List<Ticket> getTickets(Date date, String title, TicketCategory category);
 
-    List<BookedTicket> getBookedTickets(String userName, Date date, String title, TicketCategory category);
+    List<BookedInfo> getBookedTickets(String userName, Date date, String title, TicketCategory category);
 
-    Set<String> getDatesOfMovieScreenings();
+    List<String> getDatesOfMovieScreenings();
 
-    void setTicketBooked(String ticketId, String userName);
+    void bookTicket(String ticketId, String userName);
 
-    Set<String> getMovies();
+    List<String> getMovies();
 
-    Set<String> getCategories();
+    List<String> getCategories();
 }

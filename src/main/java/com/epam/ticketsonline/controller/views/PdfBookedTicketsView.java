@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
-import com.epam.ticketsonline.entity.BookedTicket;
+import com.epam.ticketsonline.entity.BookedInfo;
 import com.lowagie.text.Document;
 import com.lowagie.text.Table;
 import com.lowagie.text.pdf.PdfWriter;
@@ -24,7 +24,7 @@ public class PdfBookedTicketsView extends AbstractPdfView {
             final HttpServletResponse response) throws Exception {
 
         @SuppressWarnings("unchecked")
-        final List<BookedTicket> ticketData = (List<BookedTicket>) model
+        final List<BookedInfo> ticketData = (List<BookedInfo>) model
                 .get("tickets");
 
         final Table table = new Table(5);
@@ -34,7 +34,7 @@ public class PdfBookedTicketsView extends AbstractPdfView {
         table.addCell("Place");
         table.addCell("BOOKED BY");
 
-        for (final BookedTicket bookedTicket : ticketData) {
+        for (final BookedInfo bookedTicket : ticketData) {
             table.addCell(bookedTicket.getTicket().getTitle());
             table.addCell(dateFormatter.format(bookedTicket.getTicket()
                     .getDate()));

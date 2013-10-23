@@ -2,20 +2,40 @@ package com.epam.ticketsonline.entity;
 
 import java.util.Date;
 
-public class Ticket {
-    String id;
-    String title;
-    Date date;
-    TicketCategory category;
-    Integer place;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 
-    public Ticket(final String id, final String title, final Date date,
-            final TicketCategory category, final Integer place) {
-        this.id = id;
-        this.title = title;
-        this.date = date;
-        this.category = category;
-        this.place = place;
+@Entity
+@Table(name="TICKET")
+public class Ticket {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "TICKET_ID", unique = true, nullable = false)
+    Integer id;
+    @Column(name="TITLE")
+    String title;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name="DATE")
+    Date date;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name="CATEGORY")
+    TicketCategory category;
+    @Column(name="PLACE_NUMBER")
+    Integer place;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "ticket", cascade = CascadeType.ALL)
+    private BookedInfo bookedInfo;
+
+    public Ticket() {
     }
 
     @Override
@@ -23,14 +43,14 @@ public class Ticket {
         if (!(obj instanceof Ticket)) {
             return false;
         }
-        return id.equalsIgnoreCase(((Ticket) obj).getId());
+        return id==((Ticket) obj).getId();
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(final String id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -64,6 +84,14 @@ public class Ticket {
 
     public void setPlace(final Integer place) {
         this.place = place;
+    }
+
+    public BookedInfo getBookedInfo() {
+        return bookedInfo;
+    }
+
+    public void setBookedInfo(final BookedInfo bookedInfo) {
+        this.bookedInfo = bookedInfo;
     }
 
 }
