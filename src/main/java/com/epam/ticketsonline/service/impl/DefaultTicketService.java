@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.epam.ticketsonline.controller.model.BookedTicketFilterModel;
-import com.epam.ticketsonline.controller.model.TicketFilterModel;
 import com.epam.ticketsonline.dao.TicketDao;
 import com.epam.ticketsonline.entity.BookedInfo;
 import com.epam.ticketsonline.entity.Ticket;
 import com.epam.ticketsonline.service.TicketService;
+import com.epam.ticketsonline.service.data.BookedTicketFilterData;
+import com.epam.ticketsonline.service.data.TicketFilterData;
 
 @Service("ticketService")
 public class DefaultTicketService implements TicketService {
@@ -34,20 +34,20 @@ public class DefaultTicketService implements TicketService {
     }
 
     @Override
-    public List<Ticket> getTickets(final TicketFilterModel ticketFilterModel) {
-        return ticketDao.getTickets(ticketFilterModel.getDate(),
-                ticketFilterModel.getTitle(),
-                ticketFilterModel.getTicketCategory());
+    public List<Ticket> getTickets(final TicketFilterData ticketFilterData) {
+        return ticketDao.getTickets(ticketFilterData.getDate(),
+                ticketFilterData.getTitle(),
+                ticketFilterData.getTicketCategory());
     }
 
     @Override
     public List<BookedInfo> getBookedTickets(
-            final BookedTicketFilterModel bookedTicketFilterModel) {
+            final BookedTicketFilterData bookedTicketFilterData) {
         return ticketDao.getBookedTickets(
-                bookedTicketFilterModel.getUserName(),
-                bookedTicketFilterModel.getDate(),
-                bookedTicketFilterModel.getTitle(),
-                bookedTicketFilterModel.getTicketCategory());
+                bookedTicketFilterData.getUserName(),
+                bookedTicketFilterData.getDate(),
+                bookedTicketFilterData.getTitle(),
+                bookedTicketFilterData.getTicketCategory());
     }
 
     @Override

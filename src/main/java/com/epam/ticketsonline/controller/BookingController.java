@@ -11,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.epam.ticketsonline.controller.model.BookedTicketFilterModel;
 import com.epam.ticketsonline.controller.model.TicketFilterModel;
 import com.epam.ticketsonline.service.TicketService;
+import com.epam.ticketsonline.service.data.BookedTicketFilterData;
+import com.epam.ticketsonline.service.data.TicketFilterData;
 
 @Controller("/action")
 public class BookingController {
@@ -50,7 +52,7 @@ public class BookingController {
             @ModelAttribute("bookedUserFilter") final BookedTicketFilterModel bookedTicketFilterModel) {
         final ModelAndView modelAndView = new ModelAndView(
                 BOOKED_TICKETS_LIST_VIEW_NAME, "tickets",
-                ticketService.getBookedTickets(bookedTicketFilterModel));
+                ticketService.getBookedTickets(convertBookedTicketFilterModelToData(bookedTicketFilterModel)));
         return modelAndView;
     }
 
@@ -60,7 +62,7 @@ public class BookingController {
             @ModelAttribute("ticketFilter") final TicketFilterModel ticketFilterModel) {
         final ModelAndView modelAndView = new ModelAndView(
                 TICKETS_LIST_VIEW_NAME, "tickets",
-                ticketService.getTickets(ticketFilterModel));
+                ticketService.getTickets(convertTicketFilterModelToData(ticketFilterModel)));
         System.out.println();
         return modelAndView;
     }
@@ -71,8 +73,25 @@ public class BookingController {
         ticketService.bookTicket(ticketId, userName);
         final ModelAndView modelAndView = new ModelAndView(
                 BOOKED_TICKETS_LIST_VIEW_NAME).addObject("tickets",
-                ticketService.getBookedTickets(new BookedTicketFilterModel(
-                        userName)));
+                ticketService.getBookedTickets(convertBookedTicketFilterModelToData(new BookedTicketFilterModel(
+                        userName))));
         return modelAndView;
+    }
+
+    private TicketFilterData convertTicketFilterModelToData(final TicketFilterModel model){
+        final TicketFilterData data = new TicketFilterData();
+        data.setDate(model.getDate());
+        data.setTitle(model.getTitle());
+        data.setTicketCategory(model.getTicketCategory());
+        return data;
+    }
+
+    private BookedTicketFilterData convertBookedTicketFilterModelToData(final BookedTicketFilterModel model){
+        final BookedTicketFilterData data = new BookedTicketFilterData();
+        data.setUserName(model.getUserName());
+        data.setTitle(model.getTitle());
+        data.setDate(model.getDate());
+        data.setTicketCategory(model.getTicketCategory());
+        return data;
     }
 }
